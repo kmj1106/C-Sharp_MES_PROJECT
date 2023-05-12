@@ -1,0 +1,335 @@
+﻿
+namespace WindowsFormsFlower
+{
+    partial class frmChart
+    {
+        /// <summary>
+        /// 필수 디자이너 변수입니다.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// 사용 중인 모든 리소스를 정리합니다.
+        /// </summary>
+        /// <param name="disposing">관리되는 리소스를 삭제해야 하면 true이고, 그렇지 않으면 false입니다.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form 디자이너에서 생성한 코드
+
+        /// <summary>
+        /// 디자이너 지원에 필요한 메서드입니다. 
+        /// 이 메서드의 내용을 코드 편집기로 수정하지 마세요.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblOutcome = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lblIncome = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblOrder = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lblSafe = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.lblEmergency = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.lblBuy = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.lblSell = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.dgvRank = new System.Windows.Forms.DataGridView();
+            this.ptbFirst = new System.Windows.Forms.PictureBox();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRank)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbFirst)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.lblOutcome);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.lblIncome);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.lblOrder);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Location = new System.Drawing.Point(27, 22);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(255, 100);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "물류 진행현황";
+            // 
+            // lblOutcome
+            // 
+            this.lblOutcome.AutoSize = true;
+            this.lblOutcome.Location = new System.Drawing.Point(198, 63);
+            this.lblOutcome.Name = "lblOutcome";
+            this.lblOutcome.Size = new System.Drawing.Size(11, 12);
+            this.lblOutcome.TabIndex = 5;
+            this.lblOutcome.Text = "0";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(180, 42);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(45, 12);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "  출고  ";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblIncome
+            // 
+            this.lblIncome.AutoSize = true;
+            this.lblIncome.Location = new System.Drawing.Point(123, 63);
+            this.lblIncome.Name = "lblIncome";
+            this.lblIncome.Size = new System.Drawing.Size(11, 12);
+            this.lblIncome.TabIndex = 3;
+            this.lblIncome.Text = "0";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(106, 42);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(45, 12);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "  입고  ";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblOrder
+            // 
+            this.lblOrder.AutoSize = true;
+            this.lblOrder.Location = new System.Drawing.Point(49, 63);
+            this.lblOrder.Name = "lblOrder";
+            this.lblOrder.Size = new System.Drawing.Size(11, 12);
+            this.lblOrder.TabIndex = 1;
+            this.lblOrder.Text = "0";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(32, 42);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(45, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "  발주  ";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.chart1);
+            this.groupBox2.Location = new System.Drawing.Point(27, 137);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(527, 346);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "최근 6개월 총매출액";
+            // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(22, 20);
+            this.chart1.Name = "chart1";
+            this.chart1.Size = new System.Drawing.Size(482, 300);
+            this.chart1.TabIndex = 0;
+            this.chart1.Text = "chart1";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.lblSafe);
+            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.lblEmergency);
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Location = new System.Drawing.Point(622, 22);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(168, 100);
+            this.groupBox3.TabIndex = 2;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "재고 현황";
+            // 
+            // lblSafe
+            // 
+            this.lblSafe.AutoSize = true;
+            this.lblSafe.Location = new System.Drawing.Point(119, 63);
+            this.lblSafe.Name = "lblSafe";
+            this.lblSafe.Size = new System.Drawing.Size(11, 12);
+            this.lblSafe.TabIndex = 11;
+            this.lblSafe.Text = "0";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(90, 42);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(69, 12);
+            this.label8.TabIndex = 10;
+            this.label8.Text = "  안전재고  ";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblEmergency
+            // 
+            this.lblEmergency.AutoSize = true;
+            this.lblEmergency.Location = new System.Drawing.Point(42, 63);
+            this.lblEmergency.Name = "lblEmergency";
+            this.lblEmergency.Size = new System.Drawing.Size(11, 12);
+            this.lblEmergency.TabIndex = 9;
+            this.lblEmergency.Text = "0";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(13, 42);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(69, 12);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "  위험재고  ";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.lblBuy);
+            this.groupBox4.Location = new System.Drawing.Point(622, 137);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(157, 100);
+            this.groupBox4.TabIndex = 3;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "11월 매입 총액";
+            // 
+            // lblBuy
+            // 
+            this.lblBuy.AutoSize = true;
+            this.lblBuy.Location = new System.Drawing.Point(58, 46);
+            this.lblBuy.Name = "lblBuy";
+            this.lblBuy.Size = new System.Drawing.Size(38, 12);
+            this.lblBuy.TabIndex = 0;
+            this.lblBuy.Text = "label9";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.lblSell);
+            this.groupBox5.Location = new System.Drawing.Point(821, 137);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(157, 100);
+            this.groupBox5.TabIndex = 3;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "11월 매출 총액";
+            // 
+            // lblSell
+            // 
+            this.lblSell.AutoSize = true;
+            this.lblSell.Location = new System.Drawing.Point(54, 46);
+            this.lblSell.Name = "lblSell";
+            this.lblSell.Size = new System.Drawing.Size(44, 12);
+            this.lblSell.TabIndex = 1;
+            this.lblSell.Text = "label10";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.dgvRank);
+            this.groupBox6.Controls.Add(this.ptbFirst);
+            this.groupBox6.Location = new System.Drawing.Point(622, 295);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(390, 168);
+            this.groupBox6.TabIndex = 3;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "판매순위";
+            // 
+            // dgvRank
+            // 
+            this.dgvRank.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRank.Location = new System.Drawing.Point(158, 29);
+            this.dgvRank.Name = "dgvRank";
+            this.dgvRank.RowTemplate.Height = 23;
+            this.dgvRank.Size = new System.Drawing.Size(211, 121);
+            this.dgvRank.TabIndex = 1;
+            this.dgvRank.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvRank_RowPostPaint);
+            // 
+            // ptbFirst
+            // 
+            this.ptbFirst.Location = new System.Drawing.Point(20, 29);
+            this.ptbFirst.Name = "ptbFirst";
+            this.ptbFirst.Size = new System.Drawing.Size(120, 121);
+            this.ptbFirst.TabIndex = 0;
+            this.ptbFirst.TabStop = false;
+            // 
+            // frmChart
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1066, 500);
+            this.Controls.Add(this.groupBox6);
+            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
+            this.Name = "frmChart";
+            this.Tag = "frmHome";
+            this.Text = "Form1";
+            this.Load += new System.EventHandler(this.frmChart_Load);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRank)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbFirst)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label lblOutcome;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblIncome;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblOrder;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label lblSafe;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblEmergency;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblBuy;
+        private System.Windows.Forms.Label lblSell;
+        private System.Windows.Forms.DataGridView dgvRank;
+        private System.Windows.Forms.PictureBox ptbFirst;
+    }
+}
+

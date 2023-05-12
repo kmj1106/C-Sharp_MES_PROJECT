@@ -1,0 +1,514 @@
+﻿
+namespace WindowsFormsFlower
+{
+    partial class frmMaterialReg
+    {
+        /// <summary>
+        /// 필수 디자이너 변수입니다.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// 사용 중인 모든 리소스를 정리합니다.
+        /// </summary>
+        /// <param name="disposing">관리되는 리소스를 삭제해야 하면 true이고, 그렇지 않으면 false입니다.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form 디자이너에서 생성한 코드
+
+        /// <summary>
+        /// 디자이너 지원에 필요한 메서드입니다. 
+        /// 이 메서드의 내용을 코드 편집기로 수정하지 마세요.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.cboMatCategory = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtMatName = new System.Windows.Forms.TextBox();
+            this.txtMatUnit = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtMatMainBuy = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtPrice = new WindowsFormsFlower.Controls.NumTextBox();
+            this.가격 = new System.Windows.Forms.Label();
+            this.nmSafeDate = new System.Windows.Forms.NumericUpDown();
+            this.btnMatDelete = new System.Windows.Forms.Button();
+            this.btnMatUpdate = new System.Windows.Forms.Button();
+            this.btnMatCreate = new System.Windows.Forms.Button();
+            this.txtMatID = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cboType = new System.Windows.Forms.ComboBox();
+            this.nmDanger = new System.Windows.Forms.NumericUpDown();
+            this.nmSafe = new System.Windows.Forms.NumericUpDown();
+            this.nmMin = new System.Windows.Forms.NumericUpDown();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnMatSearch = new System.Windows.Forms.Button();
+            this.txtMatSearch = new System.Windows.Forms.TextBox();
+            this.btnMatImage = new System.Windows.Forms.Button();
+            this.ptbmat = new System.Windows.Forms.PictureBox();
+            this.dgvMaterials = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+            this.splitContainer3.Panel2.SuspendLayout();
+            this.splitContainer3.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nmSafeDate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmDanger)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmSafe)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbmat)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMaterials)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // splitContainer1
+            // 
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.textBox1);
+            this.splitContainer1.Size = new System.Drawing.Size(1260, 625);
+            this.splitContainer1.SplitterDistance = 70;
+            // 
+            // splitContainer2
+            // 
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.dgvMaterials);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.ptbmat);
+            this.splitContainer2.Panel2.Controls.Add(this.btnMatImage);
+            this.splitContainer2.Panel2.Controls.Add(this.groupBox1);
+            this.splitContainer2.Size = new System.Drawing.Size(1260, 551);
+            this.splitContainer2.SplitterDistance = 609;
+            // 
+            // splitContainer3
+            // 
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.txtMatSearch);
+            this.splitContainer3.Panel2.Controls.Add(this.btnMatSearch);
+            this.splitContainer3.Size = new System.Drawing.Size(1260, 70);
+            this.splitContainer3.SplitterDistance = 29;
+            // 
+            // cboMatCategory
+            // 
+            this.cboMatCategory.FormattingEnabled = true;
+            this.cboMatCategory.Location = new System.Drawing.Point(122, 86);
+            this.cboMatCategory.Name = "cboMatCategory";
+            this.cboMatCategory.Size = new System.Drawing.Size(77, 20);
+            this.cboMatCategory.TabIndex = 17;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label10.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label10.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.label10.Location = new System.Drawing.Point(26, 218);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(33, 13);
+            this.label10.TabIndex = 11;
+            this.label10.Text = "종류";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label9.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label9.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.label9.Location = new System.Drawing.Point(27, 185);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(59, 13);
+            this.label9.TabIndex = 12;
+            this.label9.Text = "최소수량";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label7.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label7.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.label7.Location = new System.Drawing.Point(26, 122);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(33, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "단위";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label6.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label6.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.label6.Location = new System.Drawing.Point(26, 90);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(59, 13);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "자재분류";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label5.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label5.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.label5.Location = new System.Drawing.Point(26, 57);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(46, 13);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "자재명\r\n";
+            // 
+            // txtMatName
+            // 
+            this.txtMatName.Location = new System.Drawing.Point(122, 53);
+            this.txtMatName.Name = "txtMatName";
+            this.txtMatName.Size = new System.Drawing.Size(98, 21);
+            this.txtMatName.TabIndex = 9;
+            // 
+            // txtMatUnit
+            // 
+            this.txtMatUnit.Location = new System.Drawing.Point(122, 118);
+            this.txtMatUnit.Name = "txtMatUnit";
+            this.txtMatUnit.Size = new System.Drawing.Size(77, 21);
+            this.txtMatUnit.TabIndex = 10;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label1.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.label1.Location = new System.Drawing.Point(27, 353);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 13);
+            this.label1.TabIndex = 24;
+            this.label1.Text = "주거래처";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label11.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label11.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.label11.Location = new System.Drawing.Point(26, 320);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(59, 13);
+            this.label11.TabIndex = 25;
+            this.label11.Text = "유통기한";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label12.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label12.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.label12.Location = new System.Drawing.Point(27, 287);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(59, 13);
+            this.label12.TabIndex = 26;
+            this.label12.Text = "위험수량";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label13.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label13.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.label13.Location = new System.Drawing.Point(26, 254);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(59, 13);
+            this.label13.TabIndex = 27;
+            this.label13.Text = "안전수량";
+            // 
+            // txtMatMainBuy
+            // 
+            this.txtMatMainBuy.Location = new System.Drawing.Point(122, 349);
+            this.txtMatMainBuy.Name = "txtMatMainBuy";
+            this.txtMatMainBuy.Size = new System.Drawing.Size(98, 21);
+            this.txtMatMainBuy.TabIndex = 22;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.txtPrice);
+            this.groupBox1.Controls.Add(this.가격);
+            this.groupBox1.Controls.Add(this.nmSafeDate);
+            this.groupBox1.Controls.Add(this.btnMatDelete);
+            this.groupBox1.Controls.Add(this.btnMatUpdate);
+            this.groupBox1.Controls.Add(this.btnMatCreate);
+            this.groupBox1.Controls.Add(this.txtMatID);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.cboType);
+            this.groupBox1.Controls.Add(this.nmDanger);
+            this.groupBox1.Controls.Add(this.nmSafe);
+            this.groupBox1.Controls.Add(this.nmMin);
+            this.groupBox1.Controls.Add(this.txtMatName);
+            this.groupBox1.Controls.Add(this.txtMatUnit);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.cboMatCategory);
+            this.groupBox1.Controls.Add(this.txtMatMainBuy);
+            this.groupBox1.Location = new System.Drawing.Point(320, 9);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(333, 451);
+            this.groupBox1.TabIndex = 32;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "자재 상세내역";
+            // 
+            // txtPrice
+            // 
+            this.txtPrice.Location = new System.Drawing.Point(122, 149);
+            this.txtPrice.Name = "txtPrice";
+            this.txtPrice.Size = new System.Drawing.Size(77, 21);
+            this.txtPrice.TabIndex = 43;
+            // 
+            // 가격
+            // 
+            this.가격.AutoSize = true;
+            this.가격.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.가격.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.가격.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.가격.Location = new System.Drawing.Point(26, 153);
+            this.가격.Name = "가격";
+            this.가격.Size = new System.Drawing.Size(33, 13);
+            this.가격.TabIndex = 42;
+            this.가격.Text = "가격";
+            // 
+            // nmSafeDate
+            // 
+            this.nmSafeDate.Location = new System.Drawing.Point(123, 316);
+            this.nmSafeDate.Name = "nmSafeDate";
+            this.nmSafeDate.Size = new System.Drawing.Size(97, 21);
+            this.nmSafeDate.TabIndex = 40;
+            // 
+            // btnMatDelete
+            // 
+            this.btnMatDelete.Location = new System.Drawing.Point(243, 405);
+            this.btnMatDelete.Name = "btnMatDelete";
+            this.btnMatDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnMatDelete.TabIndex = 39;
+            this.btnMatDelete.Text = "삭제";
+            this.btnMatDelete.UseVisualStyleBackColor = true;
+            this.btnMatDelete.Click += new System.EventHandler(this.btnMatDelete_Click);
+            // 
+            // btnMatUpdate
+            // 
+            this.btnMatUpdate.Location = new System.Drawing.Point(147, 405);
+            this.btnMatUpdate.Name = "btnMatUpdate";
+            this.btnMatUpdate.Size = new System.Drawing.Size(75, 23);
+            this.btnMatUpdate.TabIndex = 38;
+            this.btnMatUpdate.Text = "수정";
+            this.btnMatUpdate.UseVisualStyleBackColor = true;
+            this.btnMatUpdate.Click += new System.EventHandler(this.btnMatUpdate_Click);
+            // 
+            // btnMatCreate
+            // 
+            this.btnMatCreate.Location = new System.Drawing.Point(55, 405);
+            this.btnMatCreate.Name = "btnMatCreate";
+            this.btnMatCreate.Size = new System.Drawing.Size(75, 23);
+            this.btnMatCreate.TabIndex = 37;
+            this.btnMatCreate.Text = "등록";
+            this.btnMatCreate.UseVisualStyleBackColor = true;
+            this.btnMatCreate.Click += new System.EventHandler(this.btnMatCreate_Click);
+            // 
+            // txtMatID
+            // 
+            this.txtMatID.Location = new System.Drawing.Point(122, 20);
+            this.txtMatID.Name = "txtMatID";
+            this.txtMatID.Size = new System.Drawing.Size(98, 21);
+            this.txtMatID.TabIndex = 35;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label2.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label2.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.label2.Location = new System.Drawing.Point(26, 24);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(49, 13);
+            this.label2.TabIndex = 36;
+            this.label2.Text = "자재 ID";
+            // 
+            // cboType
+            // 
+            this.cboType.FormattingEnabled = true;
+            this.cboType.Location = new System.Drawing.Point(122, 214);
+            this.cboType.Name = "cboType";
+            this.cboType.Size = new System.Drawing.Size(100, 20);
+            this.cboType.TabIndex = 34;
+            // 
+            // nmDanger
+            // 
+            this.nmDanger.Location = new System.Drawing.Point(122, 283);
+            this.nmDanger.Name = "nmDanger";
+            this.nmDanger.Size = new System.Drawing.Size(97, 21);
+            this.nmDanger.TabIndex = 33;
+            // 
+            // nmSafe
+            // 
+            this.nmSafe.Location = new System.Drawing.Point(122, 250);
+            this.nmSafe.Name = "nmSafe";
+            this.nmSafe.Size = new System.Drawing.Size(97, 21);
+            this.nmSafe.TabIndex = 32;
+            // 
+            // nmMin
+            // 
+            this.nmMin.Location = new System.Drawing.Point(122, 181);
+            this.nmMin.Name = "nmMin";
+            this.nmMin.Size = new System.Drawing.Size(97, 21);
+            this.nmMin.TabIndex = 31;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(3, 2);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(186, 21);
+            this.textBox1.TabIndex = 39;
+            // 
+            // btnMatSearch
+            // 
+            this.btnMatSearch.Location = new System.Drawing.Point(196, 3);
+            this.btnMatSearch.Name = "btnMatSearch";
+            this.btnMatSearch.Size = new System.Drawing.Size(95, 23);
+            this.btnMatSearch.TabIndex = 0;
+            this.btnMatSearch.Text = "검색";
+            this.btnMatSearch.UseVisualStyleBackColor = true;
+            this.btnMatSearch.Click += new System.EventHandler(this.btnMatSearch_Click);
+            // 
+            // txtMatSearch
+            // 
+            this.txtMatSearch.Location = new System.Drawing.Point(12, 5);
+            this.txtMatSearch.Name = "txtMatSearch";
+            this.txtMatSearch.Size = new System.Drawing.Size(177, 21);
+            this.txtMatSearch.TabIndex = 36;
+            // 
+            // btnMatImage
+            // 
+            this.btnMatImage.Location = new System.Drawing.Point(193, 414);
+            this.btnMatImage.Name = "btnMatImage";
+            this.btnMatImage.Size = new System.Drawing.Size(106, 23);
+            this.btnMatImage.TabIndex = 33;
+            this.btnMatImage.Text = "이미지 등록";
+            this.btnMatImage.UseVisualStyleBackColor = true;
+            this.btnMatImage.Click += new System.EventHandler(this.btnMatImage_Click);
+            // 
+            // ptbmat
+            // 
+            this.ptbmat.Location = new System.Drawing.Point(13, 9);
+            this.ptbmat.Name = "ptbmat";
+            this.ptbmat.Size = new System.Drawing.Size(286, 270);
+            this.ptbmat.TabIndex = 34;
+            this.ptbmat.TabStop = false;
+            // 
+            // dgvMaterials
+            // 
+            this.dgvMaterials.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMaterials.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvMaterials.Location = new System.Drawing.Point(0, 0);
+            this.dgvMaterials.MaximumSize = new System.Drawing.Size(594, 551);
+            this.dgvMaterials.Name = "dgvMaterials";
+            this.dgvMaterials.RowTemplate.Height = 23;
+            this.dgvMaterials.Size = new System.Drawing.Size(594, 551);
+            this.dgvMaterials.TabIndex = 0;
+            this.dgvMaterials.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMaterials_CellContentClick);
+            this.dgvMaterials.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMaterials_CellDoubleClick);
+            // 
+            // frmMaterialReg
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.ClientSize = new System.Drawing.Size(1260, 625);
+            this.Name = "frmMaterialReg";
+            this.Text = "자재등록";
+            this.Load += new System.EventHandler(this.frmMaterialReg_Load);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
+            this.splitContainer3.Panel2.ResumeLayout(false);
+            this.splitContainer3.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+            this.splitContainer3.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nmSafeDate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmDanger)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmSafe)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbmat)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMaterials)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+        private System.Windows.Forms.ComboBox cboMatCategory;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtMatName;
+        private System.Windows.Forms.TextBox txtMatUnit;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txtMatMainBuy;
+        private System.Windows.Forms.NumericUpDown nmDanger;
+        private System.Windows.Forms.NumericUpDown nmSafe;
+        private System.Windows.Forms.NumericUpDown nmMin;
+        private System.Windows.Forms.ComboBox cboType;
+        private System.Windows.Forms.TextBox txtMatID;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnMatDelete;
+        private System.Windows.Forms.Button btnMatUpdate;
+        private System.Windows.Forms.Button btnMatCreate;
+        private System.Windows.Forms.TextBox txtMatSearch;
+        private System.Windows.Forms.Button btnMatSearch;
+        private System.Windows.Forms.PictureBox ptbmat;
+        private System.Windows.Forms.Button btnMatImage;
+        private System.Windows.Forms.NumericUpDown nmSafeDate;
+        private System.Windows.Forms.DataGridView dgvMaterials;
+        private Controls.NumTextBox txtPrice;
+        private System.Windows.Forms.Label 가격;
+    }
+}

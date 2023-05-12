@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FlowerVO
+{
+    public class ContainerVO
+    {
+        public string MaterialID { get; set; }
+        public string MaterialName { get; set; }
+        public string MatStock { get; set; }
+        public int MatPrice { get; set; }
+        public string MainCustomer { get; set; }
+        public string CusName { get; set; }
+
+        public int SafeStock { get; set; }
+        public int EmergenctStock { get; set; }
+        public DateTime Date { get; set; }
+        public int StockQuantity { get; set; }
+        public int Quantity { get; set; }
+        public string StockState { get; set; }
+        public int ID { get; set; }
+        public string Division { get; set; }
+    }
+}

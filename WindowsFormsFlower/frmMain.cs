@@ -1,0 +1,317 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Excel = Microsoft.Office.Interop.Excel;
+using FlowerVO;
+using WindowsFormsAppFlower;
+
+namespace WindowsFormsFlower
+{
+    public partial class frmMain : Form
+    {
+        public UserVO LoginUser { get; set; }
+        //슬라이딩 메뉴의 최대, 최소 폭 크기
+        const int MAX_SLIDING_WIDTH = 100;
+        const int MIN_SLIDING_WIDTH = 50;
+        //슬라이딩 메뉴가 보이는/접히는 속도 조절
+        const int STEP_SLIDING = 10;
+        //최초 슬라이딩 메뉴 크기
+        int _posSliding = 100;
+
+        public frmMain()
+        {
+            InitializeComponent();
+        }
+
+        private void checkBoxHide_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxHide.Checked == true)
+            {
+                //슬라이딩 메뉴가 접혔을 때, 메뉴 버튼의 표시
+                btnUser.Text = null;
+                btnUser.BackgroundImage = Properties.Resources.User;
+                btnCustomer.Text = null;
+                btnCustomer.BackgroundImage = Properties.Resources.Production;
+                btnMaterial.Text = null;
+                btnMaterial.BackgroundImage = Properties.Resources.material;
+                btnProduct.Text = null;
+                btnProduct.BackgroundImage = Properties.Resources.Product;
+                btnBOM.Text = null;
+                btnBOM.BackgroundImage = Properties.Resources.BOM;
+                btnOrderCheck.Text = null;
+                btnOrderCheck.BackgroundImage = Properties.Resources.OrderCheck;
+                btnPurchase.Text = null;
+                btnPurchase.BackgroundImage = Properties.Resources.Order;
+                btnIncome.Text = null;
+                btnIncome.BackgroundImage = Properties.Resources.income;
+                btnSale.Text = null;
+                btnSale.BackgroundImage = Properties.Resources.Sale;
+                btnOutcome.Text = null;
+                btnOutcome.BackgroundImage = Properties.Resources.outcome;
+                btnContainer.Text = null;
+                btnContainer.BackgroundImage = Properties.Resources.stock;
+                checkBoxHide.Text = ">";
+                btnForward.Text = null;
+
+            }
+            else
+            {
+                //슬라이딩 메뉴가 보였을 때, 메뉴 버튼의 표시
+                btnUser.Text = "회원관리";
+                btnUser.BackgroundImage = null;
+                btnCustomer.Text = "거래처관리";
+                btnCustomer.BackgroundImage = null;
+                btnMaterial.Text = "자재관리";
+                btnMaterial.BackgroundImage = null;
+                btnProduct.Text = "제품관리";
+                btnProduct.BackgroundImage = null;
+                btnBOM.Text = "BOM";
+                btnBOM.BackgroundImage = null;
+                btnOrderCheck.Text = "발주등록";
+                btnOrderCheck.BackgroundImage = null;
+                btnPurchase.Text = "발주관리";
+                btnPurchase.BackgroundImage = null;
+                btnIncome.Text = "입고관리";
+                btnIncome.BackgroundImage = null;
+                btnSale.Text = "판매관리";
+                btnSale.BackgroundImage = null;
+                btnOutcome.Text = "출고관리";
+                btnOutcome.BackgroundImage = null;
+                btnContainer.Text = "재고관리";
+                btnContainer.BackgroundImage = null;
+                btnForward.Text = "정전개/역전개";
+                btnForward.BackgroundImage = null;
+                checkBoxHide.Text = "<";
+            }
+
+            //타이머 시작
+            timerSliding.Start();
+        }
+
+        private void timerSliding_Tick(object sender, EventArgs e)
+        {
+            if (checkBoxHide.Checked == true)
+            {
+                //슬라이딩 메뉴를 숨기는 동작
+                _posSliding -= STEP_SLIDING;
+                if (_posSliding <= MIN_SLIDING_WIDTH)
+                    timerSliding.Stop();
+            }
+            else
+            {
+                //슬라이딩 메뉴를 보이는 동작
+                _posSliding += STEP_SLIDING;
+                if (_posSliding >= MAX_SLIDING_WIDTH)
+                    timerSliding.Stop();
+            }
+
+            panelSideMenu.Width = _posSliding;
+        }
+
+        private void frmMain1_Load(object sender, EventArgs e)
+        {
+            ucTabControl1.Visible = false;
+        }
+
+        private void OpenCreateForm(string prgName)
+        {
+            // 열려있는 폼들중에서 없으면 새로 만들어서 폼을 보여주고,
+            // 이미 열려있는 폼이라면, 활성폼으로 만들어서 제일 앞으로 위치
+
+            string appName = Assembly.GetEntryAssembly().GetName().Name;
+
+            Type frmType = Type.GetType($"{appName}.{prgName}");
+            //어셈블리명.클래스명
+
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form.GetType() == frmType)
+                {
+                    form.Activate(); //Activate 이벤트
+                    form.BringToFront();
+                    return;
+                }
+            }
+
+            Form frm = (Form)Activator.CreateInstance(frmType);
+            frm.MdiParent = this;
+            frm.Show(); //Load->Activate 이벤트
+        }
+
+        private void MenuItem_Click(object sender, EventArgs e)
+        {
+            Button menu = (Button)sender;
+            OpenCreateForm(menu.Tag.ToString());
+        }
+        private void frmMain_MdiChildActivate(object sender, EventArgs e)
+        {
+            if (this.ActiveMdiChild == null)
+            {
+                ucTabControl1.Visible = false;
+            }
+            else
+            {
+                this.ActiveMdiChild.WindowState = FormWindowState.Maximized;
+
+                if (this.ActiveMdiChild.Tag == null)
+                {
+                    //탭페이지를 추가해서 탭컨트롤에 추가
+                    TabPage tp = new TabPage(this.ActiveMdiChild.Text + "   ");
+                    tp.Parent = ucTabControl1;
+                    tp.Tag = this.ActiveMdiChild;
+                    ucTabControl1.SelectedTab = tp;
+
+                    this.ActiveMdiChild.FormClosed += ActiveMdiChild_FormClosed;
+
+                    this.ActiveMdiChild.Tag = tp;
+                }
+
+                if (!ucTabControl1.Visible)
+                    ucTabControl1.Visible = true;
+            }
+        }
+
+        private void ActiveMdiChild_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Form frm = (Form)sender;
+            ((TabPage)frm.Tag).Dispose();
+        }
+
+        private void ucTabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ucTabControl1.SelectedTab != null)
+            {
+                Form frm = (Form)ucTabControl1.SelectedTab.Tag;
+                frm.Select();
+            }
+        }
+
+        private void menuStrip1_ItemAdded(object sender, ToolStripItemEventArgs e)
+        {
+            if (e.Item.Text == ""
+                   || e.Item.Text == "닫기(&C)"
+                   || e.Item.Text == "최소화(&N)"
+                   || e.Item.Text == "이전 크기로(&R)")
+                e.Item.Visible = false;
+        }
+        private void ucTabControl1_MouseDown(object sender, MouseEventArgs e)
+        {
+            for (int i = 0; i < ucTabControl1.TabPages.Count; i++)
+            {
+                var r = ucTabControl1.GetTabRect(i);
+                var closeImage = Properties.Resources.close_grey;
+                var closeRect = new Rectangle((r.Right - closeImage.Width), r.Top + (r.Height - closeImage.Height) / 2,
+                    closeImage.Width, closeImage.Height);
+
+                if (closeRect.Contains(e.Location))
+                {
+                    this.ActiveMdiChild.Close();
+                    break;
+                }
+            }
+        }
+
+
+        private Control[] GetControls(Control con)
+        {
+            var conList = new List<Control>();
+            foreach (Control control in con.Controls)
+            {
+                if (control is DataGridView)
+                    conList.Add(control);
+
+                if (control.Controls.Count > 0)
+                    conList.AddRange(GetControls(control));
+            }
+            return conList.ToArray();
+        }
+        private void 인쇄ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.ActiveMdiChild == null)
+            {
+                return;
+            }
+
+            var conList = GetControls(this.ActiveMdiChild);
+            ;
+            if (conList.Length < 1)
+            {
+                MessageBox.Show("다운받을 데이터가 없습니다.");
+            }
+            else if(conList.Length ==1)
+            {
+                GetExcel((DataGridView)conList[0]);
+            }
+            else
+            {
+                DialogResult result = MessageBox.Show($"{conList[0].Name} 데이터 그리드뷰와  {conList[1].Name} 중에 하나를 선택하세요.\n 첫번째는 Yes 두번째는 No","다운받을 데이터소스 선택" , MessageBoxButtons.YesNoCancel);
+                if(result == DialogResult.Yes)
+                {
+                    GetExcel((DataGridView)conList[0]);
+                }
+                else if(result == DialogResult.No)
+                {
+                    GetExcel((DataGridView)conList[1]);
+                }
+            }          
+        }
+
+        private void GetExcel(DataGridView source)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            //if (dlg.ShowDialog() == DialogResult.OK)
+            //{
+            //    bool result = ExcelUtil.ExportExcelToList<EmployeeVO>(
+            //                        (List<EmployeeVO>)dgvEmp.DataSource,
+            //                        dlg.FileName,
+            //                        "Photo@Notes");
+            //    if (result)
+            //    {
+            //        MessageBox.Show("엑셀 다운로드 완료");
+            //    }
+            //}
+        }
+
+        private void releaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                obj = null;
+                MessageBox.Show("Exception Occured while releasing object " + ex.ToString());
+            }
+            finally
+            {
+                GC.Collect();
+            }
+        }
+
+        private void 홈ToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menu = (ToolStripMenuItem)sender;
+            OpenCreateForm(menu.Tag.ToString());
+        }
+
+        private void 전체창닫기ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for (int i = Application.OpenForms.Count - 1; i >= 0; i--)
+            {
+                if (Application.OpenForms[i].Name != "frmMain")
+                {
+                    Application.OpenForms[i].Close();
+                }
+            }
+        }
+    }
+}

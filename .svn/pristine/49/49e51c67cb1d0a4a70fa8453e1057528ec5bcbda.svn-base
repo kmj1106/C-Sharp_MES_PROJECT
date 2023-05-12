@@ -1,0 +1,157 @@
+﻿using FlowerVO;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+using System.Linq;
+
+namespace WindowsFormsFlower
+{
+    public partial class frmPurChaseOrder : WindowsFormsFlower.frmListListVertical
+    {
+        OrderService ordServ = new OrderService();
+        CommonService comServ = new CommonService();
+        List<OrderVO> oList;
+        List<OrderDetailVO> odList;
+        public frmPurChaseOrder()
+        {
+            InitializeComponent();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            string custID = cboCustomer.SelectedValue.ToString();
+            string dtFrom = periodUserControl1.From;
+            string dtTo = periodUserControl1.To;
+
+            List<OrderIncomeVO> list = ordServ.GetOrderSearchList(dtFrom, dtTo);
+            dgvOrder.DataSource = list;
+        }
+
+        private void dgvOrder_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            int orderID = Convert.ToInt32(dgvOrder["OrderID", e.RowIndex].Value);
+            var list = (from order in odList
+                        where order.OrderID == orderID
+                        select
+                        new OrderDetailVO
+                        {
+                            OrderDetailID = order.OrderDetailID,
+                            MaterialID = order.MaterialID,
+                            MaterialName = order.MaterialName,
+                            Quantity = order.Quantity,
+                            UnitPrice = order.UnitPrice
+                        }).ToList();
+            dgvOrderDetail.DataSource = list;
+            dgvOrderDetail.ClearSelection();
+        }
+
+        private void btnAll_Click(object sender, EventArgs e)
+        {       
+            dgvOrder.DataSource = oList;
+        }
+
+        private void frmPurChaseOrder_Load(object sender, EventArgs e)
+        {
+            //제품 데이터그리드뷰 컬럼 셋팅
+            DataGridViewUtil.SetInitGridView(dgvOrder);
+            DataGridViewUtil.AddGridTextColumn(dgvOrder, "발주ID", "OrderID");
+            DataGridViewUtil.AddGridTextColumn(dgvOrder, "거래처ID", "CusID");
+            DataGridViewUtil.AddGridTextColumn(dgvOrder, "거래처명", "CusName");                     
+            DataGridViewUtil.AddGridTextColumn(dgvOrder, "발주요청일", "RequiredDate");
+            DataGridViewUtil.AddGridTextColumn(dgvOrder, "납기요청일", "OrderDate");
+            DataGridViewUtil.AddGridTextColumn(dgvOrder, "납기일", "ReceiveDate");
+
+            DataGridViewUtil.SetInitGridView(dgvOrderDetail);
+            DataGridViewUtil.AddGridTextColumn(dgvOrderDetail, "발주상세ID", "OrderDetailID", visibility:false);
+            DataGridViewUtil.AddGridTextColumn(dgvOrderDetail, "자재ID", "MaterialID");
+            DataGridViewUtil.AddGridTextColumn(dgvOrderDetail, "자재명", "MaterialName");
+            DataGridViewUtil.AddGridTextColumn(dgvOrderDetail, "수량", "Quantity");
+            DataGridViewUtil.AddGridTextColumn(dgvOrderDetail, "가격", "UnitPrice");
+
+            oList = ordServ.GetOrderAllList();
+            odList = ordServ.GetOrderDetailAllList();
+
+            List<CommonVO> list = comServ.GetCodeList("Customer");
+            CommonUtil.ComboBinding(cboCustomer, list, "Customer", blankText: "선택");
+        }
+
+        private void btnOrderOK_Click(object sender, EventArgs e)
+        {
+            if (dgvOrder.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("승인할 발주를 선택하여 주십시오.");
+                return;
+            }
+
+            if (Convert.ToDateTime(dgvOrder.SelectedRows[0].Cells["ReceiveDate"].Value) > DateTime.Now.AddYears(-2000))
+            {
+                MessageBox.Show("발주가 완료된 내역입니다");
+                return;
+            }
+
+            bool result = ordServ.OrderReceive(Convert.ToInt32(dgvOrder.SelectedRows[0].Cells["OrderID"].Value));
+
+            if (result)
+            {
+                oList.Clear();
+                dgvOrderDetail.DataSource = null;
+                dgvOrder.DataSource = null;
+                oList = ordServ.GetOrderAllList();
+
+                MessageBox.Show("발주가 승인되었습니다.");
+            }
+            else
+            {
+                MessageBox.Show("발주승인 중 오류가 발생했습니다. 다시 시도하여 주십시오.");
+            }
+        }
+
+        private void btnOrderDel_Click(object sender, EventArgs e)
+        {
+            if (dgvOrder.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("취소할 발주를 선택하여 주십시오.");
+                return;
+            }
+            bool dResult;
+            if (dgvOrderDetail.SelectedRows.Count < 1)
+                dResult = ordServ.DeleteOrder(Convert.ToInt32(dgvOrder.SelectedRows[0].Cells["OrderID"].Value));
+            else
+                dResult = ordServ.DeleteOrder(Convert.ToInt32(dgvOrderDetail.SelectedRows[0].Cells["OrderDetailID"].Value), Detail: true);
+
+            if (dResult)
+            {
+                oList.Clear();
+                odList.Clear();
+                dgvOrderDetail.DataSource = null;
+                dgvOrder.DataSource = null;
+                oList = ordServ.GetOrderAllList();
+                odList = ordServ.GetOrderDetailAllList();
+
+                MessageBox.Show("취소가 완료되었습니다.");
+            }
+            else
+            {
+                MessageBox.Show("취소 중 오류가 발생했습니다. 다시 시도하여 주십시오.");
+            }
+
+
+        }
+
+        private void cboCustomer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboCustomer.SelectedIndex < 1)
+            {
+                return;
+            }
+
+            dgvOrder.DataSource = oList.FindAll((x) => x.CusID == cboCustomer.SelectedValue.ToString());
+        }
+    }
+}

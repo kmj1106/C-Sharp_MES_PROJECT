@@ -1,0 +1,134 @@
+﻿using FlowerVO;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FlowerDAC
+{
+    public class OrderIncomeDAC : IDisposable
+    {
+        SqlConnection conn;
+        public OrderIncomeDAC()
+        {
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["local"].ConnectionString);
+            conn.Open();
+        }
+        public void Dispose()
+        {
+            conn.Close();
+        }
+
+        public List<OrderIncomeVO> GetOrderIncomeAllList()
+        {
+            string sql = "select IncomeID, OrderDetailID, IncomeDate, IncomeCount from OrderIncome";
+
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    return Helper.DataReaderMapToList<OrderIncomeVO>(cmd.ExecuteReader());
+                }
+            }
+            catch (Exception err)
+            {
+                Debug.WriteLine(err.Message);
+                return null;
+            }
+        }
+
+        public List<OrderIncomeVO> GetMatIncomeList()
+        {
+            string sql = "select IncomeID, OrderDetailID, IncomeDate, IncomeCount from OrderIncome";
+
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    return Helper.DataReaderMapToList<OrderIncomeVO>(cmd.ExecuteReader());
+                }
+            }
+            catch (Exception err)
+            {
+                Debug.WriteLine(err.Message);
+                return null;
+            }
+        }
+
+        public bool RegisterIncome(int odID, int num)
+        {
+            try
+            {
+                string sql = "insert into OrderIncome (OrderDetailID, IncomeCount) values (@OrderDetailID, @IncomeCount)";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@OrderDetailID", odID);
+                cmd.Parameters.AddWithValue("@IncomeCount", num);
+
+
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception err)
+            {
+                Debug.WriteLine(err.Message);
+                return false;
+            }
+        }
+
+        public List<OrderIncomeVO> GetOrderList()
+        {
+            string sql = @"select od.OrderID, CusID, RequiredDate, CusName, OrderDate, ReceiveDate, od.OrderDetailID, MaterialID, Quantity, UnitPrice, MaterialName,IncomeQuantity 
+from OrderDetail od
+join (select od.OrderDetailID,ISNULL(sum(IncomeCount), 0) IncomeQuantity
+ from OrderDetail od
+left join OrderIncome oi on oi.OrderDetailID = od.OrderDetailID
+group by od.OrderDetailID) c on od.OrderDetailID = c.OrderDetailID
+join[dbo].[Order] o on od.OrderID = o.OrderID where ReceiveDate is not null";
+
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    return Helper.DataReaderMapToList<OrderIncomeVO>(cmd.ExecuteReader());
+                }
+            }
+            catch (Exception err)
+            {
+                Debug.WriteLine(err.Message);
+                return null;
+            }
+        }
+
+        public List<OrderIncomeVO> GetOrderSearchList(string dtFrom, string dtTo, bool receive = false)
+        {
+            string sql = @"select od.OrderID, CusID, RequiredDate, CusName, OrderDate, ReceiveDate, od.OrderDetailID, MaterialID, Quantity, UnitPrice, MaterialName,IncomeQuantity 
+from OrderDetail od
+join (select od.OrderDetailID,ISNULL(sum(IncomeCount), 0) IncomeQuantity
+ from OrderDetail od
+left join OrderIncome oi on oi.OrderDetailID = od.OrderDetailID
+group by od.OrderDetailID) c on od.OrderDetailID = c.OrderDetailID
+join[dbo].[Order] o on od.OrderID = o.OrderID where OrderDate between @dtFrom and @dtTo and ReceiveDate is not null";
+            
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@dtFrom", dtFrom);
+                    cmd.Parameters.AddWithValue("@dtTo", dtTo);
+                    return Helper.DataReaderMapToList<OrderIncomeVO>(cmd.ExecuteReader());
+                }
+            }
+            catch (Exception err)
+            {
+                Debug.WriteLine(err.Message);
+                return null;
+            }
+
+        }
+    }
+}

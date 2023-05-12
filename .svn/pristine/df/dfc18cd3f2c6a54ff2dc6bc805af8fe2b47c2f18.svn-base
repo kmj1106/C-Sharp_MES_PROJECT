@@ -1,0 +1,344 @@
+﻿using FlowerDAC;
+using FlowerVO;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsFlower
+{
+    public partial class frmMaterialReg : WindowsFormsFlower.BaseForm.frmListDetail
+    {
+
+        List<MaterialVO> matAllList = null;
+        MaterialService matService = new MaterialService(); 
+        CommonService comServ = new CommonService();
+        public string currentFileName { get; set; }
+
+        public frmMaterialReg()
+        {
+            InitializeComponent();
+
+        }
+
+        
+        
+
+        private void frmMaterialReg_Load(object sender, EventArgs e)
+        {
+            DataGridViewUtil.SetInitGridView(dgvMaterials);
+
+            DataGridViewUtil.AddGridTextColumn(dgvMaterials, "자재 ID", "MaterialID");
+            DataGridViewUtil.AddGridTextColumn(dgvMaterials, "자재명", "MaterialName");
+            DataGridViewUtil.AddGridTextColumn(dgvMaterials, "자재분류", "MaterialType");
+            DataGridViewUtil.AddGridTextColumn(dgvMaterials, "자재이미지", "MaterialImage", visibility: false);
+
+            ptbmat.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            LoadData();
+
+            List<CommonVO> list = comServ.GetCodeList("Materials");
+            CommonUtil.ComboBinding(cboMatCategory, list, "Materials", blankText: "선택");
+
+            List<CommonVO> clist = comServ.GetCodeList("Customer");
+            CommonUtil.ComboBinding(cboMainCus, clist, "Customer", blankText: "선택");
+        }
+
+        private void LoadData()
+        {
+            matAllList = matService.GetMaterialsAllList();
+            dgvMaterials.DataSource = matAllList;
+        }
+
+        private void btnMatCreate_Click(object sender, EventArgs e)
+        {
+            MaterialVO newMat = new MaterialVO
+            {
+                MaterialID = txtMatID.Text,
+                MaterialName = txtMatName.Text,
+                MaterialType = cboType.Text,
+                MaterialUnit = txtMatUnit.Text,
+                MatStock = nmMin.Value.ToString(),
+                MaterialImage = currentFileName,
+                MatCategory = cboMatCategory.SelectedValue.ToString(),               
+                SafeStock = (int)nmSafe.Value,
+                EmergenctStock = (int)nmDanger.Value,
+                MaterialToDate = (int)nmSafeDate.Value,
+                MainCustomer = cboMainCus.SelectedValue.ToString(),
+                MatPrice = Convert.ToInt32(txtPrice.Text)
+            };
+
+            bool result = matService.InsertMaterials(newMat);
+            if(result)
+            {
+                MessageBox.Show("등록이 완료되었습니다.");
+                LoadData();
+            }
+            else
+            {
+                MessageBox.Show("등록 중 오류가 발생하였습니다. 다시 시도하여 주십시오.");
+            }
+            
+            
+            //MaterialVO newBOMMat = new MaterialVO
+            //{
+            //    MaterialID = txtMatID.Text,
+            //    MaterialName = txtMatName.Text,
+            //    MaterialType = cboType.Text
+            //};
+
+            //bool resultbom = matService.InsertBOMMaterials(newBOMMat);
+            //if (resultbom)
+            //{
+            //    MessageBox.Show("등록이 완료되었습니다.");
+            //    LoadData();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("등록 중 오류가 발생하였습니다. 다시 시도하여 주십시오.");
+            //}
+        }
+
+        private void btnMatUpdate_Click(object sender, EventArgs e)
+        {
+
+            MaterialVO newMaterial = new MaterialVO
+            {
+                MaterialID = txtMatID.Text,
+                MaterialName = txtMatName.Text,
+                MaterialType = cboType.Text,
+                MaterialUnit = txtMatUnit.Text,
+                MatStock = nmMin.Value.ToString(),
+                MatCategory = cboMatCategory.SelectedValue.ToString(),
+                MaterialImage = currentFileName,
+                SafeStock = (int)nmSafe.Value,
+                EmergenctStock = (int)nmDanger.Value,
+                MaterialToDate = (int)nmSafeDate.Value,
+                MainCustomer = cboMainCus.SelectedValue.ToString(),
+                MatPrice = Convert.ToInt32(txtPrice.Text)
+            };
+
+            bool result = matService.UpdateMaterials(newMaterial);
+            if (result)
+            {
+                MessageBox.Show("수정이 완료되었습니다.");
+                LoadData();
+
+            }
+            else
+            {
+                MessageBox.Show("수정 중 오류가 발생했습니다. 다시 시도하여 주십시오.");
+            }
+            
+
+
+        }
+
+        private void btnMatDelete_Click(object sender, EventArgs e)
+        {
+           if(dgvMaterials.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("삭제할 자재를 선택하여 주십시오.");
+            }
+
+            string matId = dgvMaterials.SelectedRows[0].Cells["MaterialID"].Value.ToString();
+            //DB에서 삭제
+            MaterialService data = new MaterialService();
+            bool result = data.DeleteMaterials(matId);
+            //재조회
+            LoadData();
+        }
+
+        private void dgvMaterials_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.RowIndex>-1)
+            {
+
+                string matId = dgvMaterials["MaterialID", e.RowIndex].Value.ToString();
+                int idx = matAllList.FindIndex((mat) => mat.MaterialID == matId);
+
+                if(matAllList[idx].MaterialType != "반자재")
+                {
+                    txtMatID.Text = matAllList[idx].MaterialID;
+                    txtMatName.Text = matAllList[idx].MaterialName;
+                    cboType.Text = matAllList[idx].MaterialType;
+                    txtMatUnit.Text = matAllList[idx].MaterialUnit;
+                    nmMin.Text = matAllList[idx].MatStock.ToString();
+                    cboMatCategory.SelectedValue = matAllList[idx].MatCategory;
+                    nmSafe.Text = matAllList[idx].SafeStock.ToString();
+                    nmDanger.Text = matAllList[idx].EmergenctStock.ToString();
+                    nmSafeDate.Text = matAllList[idx].MaterialToDate.ToString();
+                    cboMainCus.SelectedValue = matAllList[idx].MainCustomer;
+                    txtPrice.Text = matAllList[idx].MatPrice.ToString();
+                    
+                }
+                else
+                {
+                    ClearControls(groupBox1);
+                    txtMatID.Text = matAllList[idx].MaterialID;
+                    txtMatName.Text = matAllList[idx].MaterialName;
+                    cboType.Text = matAllList[idx].MaterialType;
+                }
+                string serverUrl = ConfigurationManager.AppSettings["apiurl"];
+                if (dgvMaterials["MaterialImage", e.RowIndex].Value != null)
+                {
+                    this.currentFileName = dgvMaterials["MaterialImage", e.RowIndex].Value.ToString();
+
+                }
+                else
+                    currentFileName = null;
+                string imgurl = $"{serverUrl}Uploads/{currentFileName}";
+                ptbmat.ImageLocation = imgurl;
+
+
+            }
+        }
+
+        private void btnMatSearch_Click(object sender, EventArgs e)
+        {
+
+            string matID = txtMatSearch.Text;
+            string matName = txtMatSearch.Text;
+
+            List<MaterialVO> list = matService.GetMaterialSearchList(matID, matName);
+            dgvMaterials.DataSource = list;
+            ClearControls(splitContainer3.Panel2);
+
+        }
+
+        private void ClearControls(Panel pnl)
+        {
+            foreach (Control ctrl in pnl.Controls)
+            {
+                if (ctrl is Label lbl)
+                    lbl.Text = "";
+                else if (ctrl is TextBox txt)
+                    txt.Text = "";
+                else if (ctrl is ComboBox cbo)
+                    cbo.SelectedIndex = 0;
+                else if (ctrl is DateTimePicker dtp)
+                    dtp.Value = DateTime.Now;
+            }
+        }
+
+        private void ClearControls(GroupBox pnl)
+        {
+            foreach (Control ctrl in pnl.Controls)
+            {
+                if (ctrl is Label lbl)
+                    lbl.Text = "";
+                else if (ctrl is TextBox txt)
+                    txt.Text = "";
+                else if (ctrl is ComboBox cbo)
+                    cbo.SelectedValue = 0;
+                else if (ctrl is DateTimePicker dtp)
+                    dtp.Value = DateTime.Now;
+                else if (ctrl is NumericUpDown nm)
+                    nm.Value = 0;
+            }
+        }
+
+        private async void btnMatImage_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtMatID.Text))
+            {
+                MessageBox.Show("이미지를 넣을 제품을 먼저 선택해주세요.");
+                return;
+            }
+
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Images File(*.gif;*.jpg;*.jpeg;*.png;*.bmp;*.jfif)|*.gif;*.jpg;*.jpeg;*.png;*.bmp;*.jfif";
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+
+                //파일업로드 API서비스 호출
+                CallService srv = new CallService();
+                FilePathVO file = await srv.ServerUpload(dlg.FileName);
+
+                if (file.IsSuccess)
+                    MessageBox.Show("업로드 완료");
+                else
+                    MessageBox.Show("업로드 실패");
+
+                currentFileName = file.FileName;
+                string serverUrl = ConfigurationManager.AppSettings["apiurl"];
+                string imgurl = $"{serverUrl}Uploads/{currentFileName}";
+
+                ptbmat.ImageLocation = imgurl;
+            }
+        }
+
+        private void dgvMaterials_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dgvMaterials_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DataGridView grid = (DataGridView)sender;
+            SortOrder so = SortOrder.None;
+            if (grid.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection == SortOrder.None ||
+                grid.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection == SortOrder.Ascending)
+            {
+                so = SortOrder.Descending;
+            }
+            else
+            {
+                so = SortOrder.Ascending;
+            }
+            //set SortGlyphDirection after databinding otherwise will always be none 
+            Sort(grid.Columns[e.ColumnIndex].Name, so);
+            grid.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection = so;
+        }
+
+        private void Sort(string column, SortOrder sortOrder)
+        {
+            switch (column)
+            {
+                case "MaterialID":
+                    {
+                        if (sortOrder == SortOrder.Ascending)
+                        {
+                            dgvMaterials.DataSource = matAllList.OrderBy(x => x.MaterialID).ToList();
+                        }
+                        else
+                        {
+                            dgvMaterials.DataSource = matAllList.OrderByDescending(x => x.MaterialID).ToList();
+                        }
+                        break;
+                    }
+                case "MaterialName":
+                    {
+                        if (sortOrder == SortOrder.Ascending)
+                        {
+                            dgvMaterials.DataSource = matAllList.OrderBy(x => x.MaterialName).ToList();
+                        }
+                        else
+                        {
+                            dgvMaterials.DataSource = matAllList.OrderByDescending(x => x.MaterialName).ToList();
+                        }
+                        break;
+                    }
+                case "MaterialType":
+                    {
+                        if (sortOrder == SortOrder.Ascending)
+                        {
+                            dgvMaterials.DataSource = matAllList.OrderBy(x => x.MaterialType).ToList();
+                        }
+                        else
+                        {
+                            dgvMaterials.DataSource = matAllList.OrderByDescending(x => x.MaterialType).ToList();
+                        }
+                        break;
+                    }
+            }
+        }
+    }
+}

@@ -1,0 +1,112 @@
+﻿using FlowerDAC;
+using FlowerVO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WindowsFormsFlower
+{
+    public class SaleService
+    {
+        public List<SaleVO> GetSaleAllList()
+        {
+            SaleDAC db = new SaleDAC();
+            List<SaleVO> list = db.GetSaleAllList();
+            db.Dispose();
+
+            return list;
+        }
+
+        public List<SaleVO> GetSaleDetailList(int sID = 0)
+        {
+            SaleDAC db = new SaleDAC();
+            List<SaleVO> list = db.GetSaleDetailList(sID);
+            db.Dispose();
+
+            return list;
+        }
+
+        public bool ComfirmSale(int oID, bool Detail = false)
+        {
+            SaleDAC db = new SaleDAC();
+            bool result = db.ComfirmSale(oID, Detail);
+            db.Dispose();
+
+            return result;
+        }
+
+        public bool CancelSale(int sID, bool Detail = false)
+        {
+            SaleDAC db = new SaleDAC();
+            bool result = db.CancelSale(sID, Detail);
+            db.Dispose();
+
+            return result;
+        }
+
+        public bool RegisterSale(SaleVO sale, List<SaleVO> cart)
+        {
+            SaleDAC db = new SaleDAC();
+            bool result = db.RegisterSale(sale, cart);
+            db.Dispose();
+
+            return result;
+        }
+
+        public List<SaleVO> GetSaleSearchList(string dtFrom, string dtTo)
+        {
+            SaleDAC db = new SaleDAC();
+            List<SaleVO> list = db.GetSaleSearchList(dtFrom, dtTo);
+            db.Dispose();
+
+            return list;
+        }
+
+        public List<SaleVO> GetProdRevenue()
+        { 
+            SaleDAC db = new SaleDAC();
+            List<SaleVO> list = db.GetProdRevenue();
+            db.Dispose();
+
+            return list;
+        }
+
+        public int GetTotIncomeByMonth(int month)
+        {
+            SaleDAC db = new SaleDAC();
+            int TotPrice = db.GetTotIncomeByMonth(month);
+            db.Dispose();
+
+            return TotPrice;
+        }
+
+        public List<SaleVO> GetReserveAllList()
+        {
+            SaleDAC db = new SaleDAC();
+            List<SaleVO> list = db.GetReserveAllList();
+            db.Dispose();
+
+            return list;
+        }
+
+        public List<SaleVO> GetReserveUser(string uID)
+        {
+            SaleDAC db = new SaleDAC();
+            List<SaleVO> list = db.GetReserveUser(uID);
+            db.Dispose();
+
+            return list;
+        }
+
+        public bool SaleDone(int sdID)
+        {
+            SaleDAC db = new SaleDAC();
+            bool result = db.SaleDone(sdID);
+            db.Dispose();
+
+            return result;
+        }
+    }
+}

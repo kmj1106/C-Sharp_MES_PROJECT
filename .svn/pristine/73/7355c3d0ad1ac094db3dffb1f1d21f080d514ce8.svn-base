@@ -1,0 +1,203 @@
+﻿using FlowerVO;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+using WindowsFormsFlower;
+
+namespace WindowsFormsFlower
+{
+    public partial class frmBOMReg : WindowsFormsFlower.BaseForm.frmListDetail
+    {
+        List<BOMVO> bomAllList = null;
+        BOMService bomService = new BOMService();
+        ProductService proService = new ProductService();
+        MaterialService matService = new MaterialService();
+        
+        
+        List<MaterialBOMVO> materialBOMAllList = null;
+        List<ProductVO> productAllList = null;
+        List<MaterialVO> materialAllList = null;
+
+        public frmBOMReg()
+        {
+            InitializeComponent();
+        }
+
+        private void frmBOMReg_Load(object sender, EventArgs e)
+        {
+            proService = new ProductService();
+            matService = new MaterialService();
+
+            DataGridViewUtil.SetInitGridView(dgvBOMProduct);
+
+            
+            DataGridViewUtil.AddGridTextColumn(dgvBOMProduct, "제품ID", "ProdID", colWidth: 100);
+            DataGridViewUtil.AddGridTextColumn(dgvBOMProduct, "제품명", "ProdName", colWidth: 100);
+            DataGridViewUtil.AddGridTextColumn(dgvBOMProduct, "제품분류", "ProdType", colWidth: 100);
+            
+
+
+            DataGridViewUtil.SetInitGridView(dgvBOMMat);
+
+            DataGridViewUtil.AddGridTextColumn(dgvBOMMat, "자재 ID", "MaterialID");
+            DataGridViewUtil.AddGridTextColumn(dgvBOMMat, "자재명", "MaterialName");
+            DataGridViewUtil.AddGridTextColumn(dgvBOMMat, "자재분류", "MaterialType");
+
+            DataGridViewUtil.SetInitGridView(dgvBOMMatP);
+
+            DataGridViewUtil.AddGridTextColumn(dgvBOMMatP, "자재 ID", "MaterialID");
+            DataGridViewUtil.AddGridTextColumn(dgvBOMMatP, "자재명", "MaterialName");
+            DataGridViewUtil.AddGridTextColumn(dgvBOMMatP, "수량", "MaterialQuantity");
+            LoadData();
+
+        }
+
+        private void LoadData()
+        {
+            productAllList = proService.GetProductBOMAllList();
+            materialAllList = matService.GetMaterialsAllList();
+
+            
+            dgvBOMProduct.DataSource = productAllList;         
+            dgvBOMMat.DataSource = materialAllList;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string prodName = txtProSearch.Text;
+
+            List<ProductVO> list = proService.GetProductBOMSearchList(prodName);
+
+            dgvBOMProduct.DataSource = list;
+
+        }
+
+        private void btnItemSave_Click(object sender, EventArgs e)
+        {
+            if (Convert.ToInt32(nmMatQuantity.Value) <= 0)
+            {
+                MessageBox.Show("재료 수량을 입력해주세요.");
+                return;
+            }
+
+            MaterialBOMVO newMat = new MaterialBOMVO
+            {
+                MaterialID = txtMatID.Text,
+                MaterialName = txtMatName.Text,
+                MaterialQuantity = Convert.ToInt32(nmMatQuantity.Value)
+            };
+
+            materialBOMAllList.Add(newMat);
+
+            dgvBOMMatP.DataSource = null;
+            dgvBOMMatP.DataSource = materialBOMAllList;
+        }
+
+        private void btnBomSave_Click(object sender, EventArgs e)
+        {
+            //materialBOMAllList을 DB에 저장 
+            //신규저장 (삽입)
+            //수정  (삭제 => 삽입)
+            
+            bool result = bomService.InsertBOM(txtProdID.Text, materialBOMAllList);
+            if (result)
+            {
+                MessageBox.Show("저장이 완료되었습니다.");
+            }
+            else
+            {
+                MessageBox.Show("저장 중 오류가 발생했습니다. 다시 시도하여 주십시오.");
+            }
+
+
+        }
+
+        private void btnItemDelete_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtMatID.Text))
+            {
+                MessageBox.Show("삭제할 아이템을 선택하여 주십시오.");
+            }
+
+            //리스트에서 삭제하고, 데이터바인딩 다시
+            int idx = materialBOMAllList.FindIndex((p) => p.MaterialID == txtMatID.Text);
+            materialBOMAllList.RemoveAt(idx);
+
+            dgvBOMMatP.DataSource = null;
+            dgvBOMMatP.DataSource = materialBOMAllList;
+        }
+
+        private void btnBOMUpdate_Click(object sender, EventArgs e)
+        {
+           //지워야 함 필요 없음
+        }
+
+        private void dgvBOMProduct_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex > -1)
+            {
+                txtProdID.Enabled = false;
+
+                string ProdID = dgvBOMProduct["ProdID", e.RowIndex].Value.ToString();
+                int idx = productAllList.FindIndex((prod) => prod.ProdID == ProdID);
+
+                txtProdID.Text = productAllList[idx].ProdID;
+                txtprodName.Text = productAllList[idx].ProdName;
+
+                //이미등록된 BOM이 있으면 조회해서 materialBOMAllList에 저장해둔다.
+                string prodID = dgvBOMProduct[0, e.RowIndex].Value.ToString();
+                materialBOMAllList = bomService.GetBOMProd(prodID);
+
+
+                if (materialBOMAllList == null) //신규
+                {
+                    materialBOMAllList = new List<MaterialBOMVO>();
+                }
+
+                dgvBOMMatP.DataSource = null;
+                dgvBOMMatP.DataSource = materialBOMAllList;
+            }
+        }
+
+        private void dgvBOMMat_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex > -1)
+            {
+                txtMatID.Enabled = false;
+
+                string MaterialID = dgvBOMMat["MaterialID", e.RowIndex].Value.ToString();
+                int idx = materialAllList.FindIndex((mat) => mat.MaterialID == MaterialID);
+
+                txtMatID.Text = materialAllList[idx].MaterialID;
+                txtMatName.Text = materialAllList[idx].MaterialName;
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboType.SelectedIndex == 0)
+            {
+                LoadData();
+                dgvBOMProduct.DataSource = productAllList;
+            }
+            else if (cboType.SelectedIndex == 1)
+            {
+                LoadData();
+                productAllList = productAllList.FindAll((x) => x.ProdType == "완제품");
+                dgvBOMProduct.DataSource = productAllList;
+            }
+            else
+            {
+                LoadData();
+                productAllList = productAllList.FindAll((x) => x.ProdType == "반자재");
+                dgvBOMProduct.DataSource = productAllList;
+            }
+
+        }
+    }
+}
